@@ -1,4 +1,4 @@
-const NBA_BASE = import.meta.env.DEV ? '/nba-api' : 'https://cdn.nba.com';
+const NBA_BASE = import.meta.env.DEV ? '/nba-api' : '/api/nba';
 const SCHEDULE_URL = `${NBA_BASE}/static/json/staticData/scheduleLeagueV2.json`;
 
 const NBA_TEAM_ID_MIN = 1610612737;
