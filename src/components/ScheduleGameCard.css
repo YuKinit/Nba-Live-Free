@@ -1,0 +1,107 @@
+.schedule-card {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.06));
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+  margin-bottom: var(--spacing-sm, 8px);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px);
+  transition: transform 160ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.schedule-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.schedule-card:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring-strong), var(--shadow-md);
+}
+
+.schedule-card-row {
+  display: flex;
+  align-items: center;
+}
+
+.schedule-card-date-col {
+  width: 72px;
+  margin-right: var(--spacing-sm, 8px);
+  flex-shrink: 0;
+}
+
+.schedule-card-date {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.schedule-card-time {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 11px;
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.schedule-card-matchup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.schedule-card-team {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.schedule-card-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.schedule-card-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.schedule-card-logo-code {
+  color: var(--text, #fff);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.schedule-card-team-name {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schedule-card-vs {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+}

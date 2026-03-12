@@ -1,0 +1,118 @@
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Prevent content from being hidden behind the fixed tab bar */
+  padding-bottom: calc(var(--tabbar-total-height, 84px) + env(safe-area-inset-bottom, 0px));
+}
+
+.app-footer {
+  flex-shrink: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1200;
+  pointer-events: none; /* allow wrapper to control hit testing */
+}
+
+/* Desktop: move tab bar to the left sidebar */
+@media (min-width: 900px) {
+  .app-layout {
+    flex-direction: row;
+  }
+
+  .app-main {
+    padding-bottom: 0;
+    padding-left: calc(var(--sidebar-width, 76px) + var(--spacing-md, 16px));
+  }
+
+  .app-footer {
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: var(--sidebar-width, 76px);
+  }
+}
+
+/* Welcome modal */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  z-index: 2000;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 340px;
+  box-shadow: var(--shadow-glow);
+  backdrop-filter: blur(16px);
+}
+
+.welcome-title {
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.welcome-body {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 22px;
+  margin: 0 0 12px;
+  text-align: center;
+}
+
+.welcome-credit {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin: 0 0 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.welcome-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 45, 85, 0.95), rgba(124, 58, 237, 0.85));
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 120ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.welcome-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  filter: saturate(1.05);
+}
+
+.welcome-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring-strong), var(--shadow-md);
+}

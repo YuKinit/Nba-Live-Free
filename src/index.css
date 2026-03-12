@@ -1,0 +1,95 @@
+/* NBA Live Free - Web - Theme variables */
+:root {
+  /* 2026 modern dark theme */
+  --background: #060814;
+  --surface: #0a1024;
+  --surface-elevated: rgba(255, 255, 255, 0.06);
+  --surface-card: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(226, 233, 255, 0.85);
+  --text-muted: rgba(226, 233, 255, 0.6);
+
+  /* Brand + accents */
+  --primary: #ff2d55;
+  --primary-glow: rgba(255, 45, 85, 0.4);
+  --accent: #5b7cfa;
+  --accent-glow: rgba(91, 124, 250, 0.35);
+  --success: #24d18f;
+  --live: #ff2d55;
+  --live-glow: rgba(255, 45, 85, 0.28);
+  --gold: rgba(255, 255, 255, 0.95);
+
+  /* Gradients */
+  --gradient-a: #5b7cfa;
+  --gradient-b: #ff2d55;
+  --gradient-c: #7c3aed;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+
+  /* Shadows */
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 20px 60px rgba(0, 0, 0, 0.45);
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(91, 124, 250, 0.35);
+  --focus-ring-strong: 0 0 0 4px rgba(91, 124, 250, 0.45);
+
+  /* Bottom tab bar sizing (used to reserve scroll space) */
+  --tabbar-total-height: 84px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.45;
+  color: var(--text);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Modern scrollbars (supported browsers only) */
+@supports (scrollbar-color: auto) {
+  * {
+    scrollbar-color: rgba(255, 255, 255, 0.18) rgba(255, 255, 255, 0.06);
+    scrollbar-width: thin;
+  }
+}
