@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ScheduleProvider } from './context/ScheduleContext.jsx';
 import { ActiveUsersProvider } from './context/ActiveUsersContext.jsx';
 import { Layout } from './Layout.jsx';
@@ -51,7 +51,7 @@ export default function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ScheduleProvider>
         <ActiveUsersProvider>
           {showWelcome && <WelcomeModal onDismiss={dismissWelcome} />}
@@ -71,6 +71,6 @@ export default function App() {
           </Routes>
         </ActiveUsersProvider>
       </ScheduleProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
