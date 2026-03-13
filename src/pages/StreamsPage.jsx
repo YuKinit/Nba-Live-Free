@@ -6,52 +6,11 @@ import { getTeamInfo } from '../data/teams.js';
 import { colors } from '../theme.js';
 import './StreamsPage.css';
 
-const STREAMS_LIST_URL = 'https://thetvapp.link/nbastreams';
-
-function slugify(name) {
-  return (name || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function buildStreamUrlFallback(game) {
-  const homeSlug = slugify(game.homeTeam);
-  const awaySlug = slugify(game.awayTeam);
-  const gameId = game.id || '';
-  return `https://thetvapp.link/nba/${homeSlug}-${awaySlug}/${gameId}`;
-}
-
-async function resolveGameStreamUrl(game) {
-  const awaySlug = slugify(game.awayTeam);
-  const homeSlug = slugify(game.homeTeam);
-  try {
-    const res = await fetch(STREAMS_LIST_URL, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0' },
-    });
-    if (!res.ok) return null;
-    const html = await res.text();
-    const re = /https:\/\/thetvapp\.link\/nba\/([^/"'\s]+)\/(\d+)/g;
-    let match;
-    while ((match = re.exec(html)) !== null) {
-      const fullUrl = match[0];
-      const pathSlug = match[1];
-      if (pathSlug && pathSlug.includes(awaySlug) && pathSlug.includes(homeSlug)) {
-        return fullUrl;
-      }
-    }
-  } catch (e) {
-    console.warn('resolveGameStreamUrl failed', e);
-  }
-  return null;
-}
-
 export function StreamsPage() {
   const navigate = useNavigate();
   const { games, loading, error, refetch } = useSchedule();
   const [refreshing, setRefreshing] = useState(false);
   const [notAvailableGame, setNotAvailableGame] = useState(null);
-  const [openingGameId, setOpeningGameId] = useState(null);
 
   const streamGames = useMemo(() => {
     if (!games || games.length === 0) return [];
@@ -94,7 +53,7 @@ export function StreamsPage() {
     setRefreshing(false);
   }, [refetch]);
 
-  const handleWatchPress = async (game) => {
+  const handleWatchPress = (game) => {
     if (game.status !== 'LIVE') {
       setNotAvailableGame({
         awayTeam: game.awayTeam,
@@ -103,11 +62,17 @@ export function StreamsPage() {
       });
       return;
     }
-    setOpeningGameId(game.id);
-    const url = await resolveGameStreamUrl(game);
-    setOpeningGameId(null);
-    const finalUrl = url || buildStreamUrlFallback(game);
-    navigate('/stream', { state: { url: finalUrl, title: `${game.awayTeam} @ ${game.homeTeam}` } });
+    const awayFull = getTeamInfo(game.awayTeam)?.name || game.awayTeam || '';
+    const homeFull = getTeamInfo(game.homeTeam)?.name || game.homeTeam || '';
+    navigate('/stream', {
+      state: {
+        away: awayFull,
+        home: homeFull,
+        awayShort: game.awayTeam || '',
+        homeShort: game.homeTeam || '',
+        title: `${game.awayTeam} @ ${game.homeTeam}`,
+      },
+    });
   };
 
   return (
@@ -122,6 +87,11 @@ export function StreamsPage() {
         <header className="streams-header">
           <h1 className="streams-title">NBA Live Streams</h1>
         </header>
+
+        <div className="streams-under-construction">
+          <span className="streams-under-construction-icon">🚧</span>
+          <span>Under construction</span>
+        </div>
 
         {loading ? (
           <div className="page-center">
@@ -155,8 +125,6 @@ export function StreamsPage() {
                 statusLabel = 'Final';
                 statusClass = 'status-final';
               }
-              const opening = openingGameId === game.id;
-
               return (
                 <div key={game.id} className="stream-item-card">
                   <div className="stream-item-header">
@@ -197,19 +165,9 @@ export function StreamsPage() {
                     type="button"
                     className="stream-watch-button"
                     onClick={() => handleWatchPress(game)}
-                    disabled={opening}
                   >
-                    {opening ? (
-                      <>
-                        <span className="spinner spinner--small" style={{ borderTopColor: colors.background }} />
-                        <span>Opening stream…</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Watch now</span>
-                        <span>→</span>
-                      </>
-                    )}
+                    <span>Watch now</span>
+                    <span>→</span>
                   </button>
                 </div>
               );

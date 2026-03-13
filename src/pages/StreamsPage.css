@@ -16,6 +16,26 @@
   margin: 0;
 }
 
+.streams-under-construction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  background: rgba(255, 193, 7, 0.12);
+  border: 1px solid rgba(255, 193, 7, 0.35);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.streams-under-construction-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
 .stream-list {
   padding: 0 var(--spacing-md) var(--spacing-xxl);
 }

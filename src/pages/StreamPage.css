@@ -1,10 +1,11 @@
 .stream-page {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .stream-page--full {
-  height: 100%;
+  min-height: 100%;
 }
 
 .stream-page-header {
@@ -46,7 +47,8 @@
 .stream-iframe {
   flex: 1;
   width: 100%;
-  min-height: 400px;
+  min-height: 0;
   border: none;
   background: var(--background);
+  display: block;
 }
