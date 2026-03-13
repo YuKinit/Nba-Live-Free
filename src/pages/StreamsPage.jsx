@@ -6,6 +6,8 @@ import { getTeamInfo } from '../data/teams.js';
 import { colors } from '../theme.js';
 import './StreamsPage.css';
 
+const STREAMS_UNDER_CONSTRUCTION = true;
+
 export function StreamsPage() {
   const navigate = useNavigate();
   const { games, loading, error, refetch } = useSchedule();
@@ -88,91 +90,98 @@ export function StreamsPage() {
           <h1 className="streams-title">NBA Live Streams</h1>
         </header>
 
-        <div className="streams-under-construction">
-          <span className="streams-under-construction-icon">🚧</span>
-          <span>Under construction</span>
-        </div>
-
-        {loading ? (
-          <div className="page-center">
-            <div className="spinner" style={{ borderTopColor: colors.primary }} />
-          </div>
-        ) : error ? (
-          <div className="page-center">
-            <p className="error-text">{error}</p>
-            <button type="button" className="retry-btn" onClick={refetch}>
-              Retry
-            </button>
-          </div>
-        ) : streamGames.length === 0 ? (
-          <div className="page-center">
-            <p className="empty-text">No games today or tomorrow.</p>
+        {STREAMS_UNDER_CONSTRUCTION ? (
+          <div className="streams-under-construction-block">
+            <div className="streams-under-construction">
+              <span className="streams-under-construction-icon">🚧</span>
+              <span>Under construction</span>
+            </div>
+            <p className="streams-under-construction-note">This section is temporarily unavailable.</p>
           </div>
         ) : (
-          <div className="stream-list">
-            {streamGames.map((game) => {
-              const away = getTeamInfo(game.awayTeam);
-              const home = getTeamInfo(game.homeTeam);
-              const timePHT = formatTimePHT(game.startTimeUtc);
-              const dateLabel = formatDateLabelPHT(game.startTimeUtc);
-              const status = game.status;
-              let statusLabel = 'Upcoming';
-              let statusClass = 'status-upcoming';
-              if (status === 'LIVE') {
-                statusLabel = 'Live now';
-                statusClass = 'status-live';
-              } else if (status === 'FINAL') {
-                statusLabel = 'Final';
-                statusClass = 'status-final';
-              }
-              return (
-                <div key={game.id} className="stream-item-card">
-                  <div className="stream-item-header">
-                    <span className="stream-time-badge">{timePHT ? `${timePHT} · PHT` : 'TBD'}</span>
-                    <span className="stream-date-label">{dateLabel}</span>
-                    <span className={`stream-status-badge ${statusClass}`}>{statusLabel}</span>
-                  </div>
-                  <div className="stream-matchup-row">
-                    <div className="stream-team-block">
-                      <div
-                        className="stream-logo-wrapper"
-                        style={{ backgroundColor: away.primary || colors.surfaceElevated }}
-                      >
-                        {away.logo ? (
-                          <img src={away.logo} alt="" className="stream-logo-img" />
-                        ) : (
-                          <span className="stream-logo-text">{away.code}</span>
-                        )}
+          <>
+            {loading ? (
+              <div className="page-center">
+                <div className="spinner" style={{ borderTopColor: colors.primary }} />
+              </div>
+            ) : error ? (
+              <div className="page-center">
+                <p className="error-text">{error}</p>
+                <button type="button" className="retry-btn" onClick={refetch}>
+                  Retry
+                </button>
+              </div>
+            ) : streamGames.length === 0 ? (
+              <div className="page-center">
+                <p className="empty-text">No games today or tomorrow.</p>
+              </div>
+            ) : (
+              <div className="stream-list">
+                {streamGames.map((game) => {
+                  const away = getTeamInfo(game.awayTeam);
+                  const home = getTeamInfo(game.homeTeam);
+                  const timePHT = formatTimePHT(game.startTimeUtc);
+                  const dateLabel = formatDateLabelPHT(game.startTimeUtc);
+                  const status = game.status;
+                  let statusLabel = 'Upcoming';
+                  let statusClass = 'status-upcoming';
+                  if (status === 'LIVE') {
+                    statusLabel = 'Live now';
+                    statusClass = 'status-live';
+                  } else if (status === 'FINAL') {
+                    statusLabel = 'Final';
+                    statusClass = 'status-final';
+                  }
+                  return (
+                    <div key={game.id} className="stream-item-card">
+                      <div className="stream-item-header">
+                        <span className="stream-time-badge">{timePHT ? `${timePHT} · PHT` : 'TBD'}</span>
+                        <span className="stream-date-label">{dateLabel}</span>
+                        <span className={`stream-status-badge ${statusClass}`}>{statusLabel}</span>
                       </div>
-                      <span className="stream-team-name">{game.awayTeam}</span>
-                    </div>
-                    <span className="stream-vs">@</span>
-                    <div className="stream-team-block">
-                      <div
-                        className="stream-logo-wrapper"
-                        style={{ backgroundColor: home.primary || colors.surfaceElevated }}
-                      >
-                        {home.logo ? (
-                          <img src={home.logo} alt="" className="stream-logo-img" />
-                        ) : (
-                          <span className="stream-logo-text">{home.code}</span>
-                        )}
+                      <div className="stream-matchup-row">
+                        <div className="stream-team-block">
+                          <div
+                            className="stream-logo-wrapper"
+                            style={{ backgroundColor: away.primary || colors.surfaceElevated }}
+                          >
+                            {away.logo ? (
+                              <img src={away.logo} alt="" className="stream-logo-img" />
+                            ) : (
+                              <span className="stream-logo-text">{away.code}</span>
+                            )}
+                          </div>
+                          <span className="stream-team-name">{game.awayTeam}</span>
+                        </div>
+                        <span className="stream-vs">@</span>
+                        <div className="stream-team-block">
+                          <div
+                            className="stream-logo-wrapper"
+                            style={{ backgroundColor: home.primary || colors.surfaceElevated }}
+                          >
+                            {home.logo ? (
+                              <img src={home.logo} alt="" className="stream-logo-img" />
+                            ) : (
+                              <span className="stream-logo-text">{home.code}</span>
+                            )}
+                          </div>
+                          <span className="stream-team-name">{game.homeTeam}</span>
+                        </div>
                       </div>
-                      <span className="stream-team-name">{game.homeTeam}</span>
+                      <button
+                        type="button"
+                        className="stream-watch-button"
+                        onClick={() => handleWatchPress(game)}
+                      >
+                        <span>Watch now</span>
+                        <span>→</span>
+                      </button>
                     </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="stream-watch-button"
-                    onClick={() => handleWatchPress(game)}
-                  >
-                    <span>Watch now</span>
-                    <span>→</span>
-                  </button>
-                </div>
-              );
-            })}
-          </div>
+                  );
+                })}
+              </div>
+            )}
+          </>
         )}
       </div>
 

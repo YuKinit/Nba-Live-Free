@@ -36,6 +36,21 @@
   line-height: 1;
 }
 
+.streams-under-construction-block {
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-xxl);
+  text-align: center;
+}
+
+.streams-under-construction-block .streams-under-construction {
+  margin-bottom: var(--spacing-md);
+}
+
+.streams-under-construction-note {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+}
+
 .stream-list {
   padding: 0 var(--spacing-md) var(--spacing-xxl);
 }
